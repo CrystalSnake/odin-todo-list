@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto-Light.ttf');
+}
+@font-face {
+  font-family: 'Bebas';
+  src: url('./BebasNeue-Regular.ttf');
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+.logo {
+  font-family: 'Bebas', sans-serif;
+  font-size: 40px;
+}
