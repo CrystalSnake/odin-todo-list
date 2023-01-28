@@ -7,5 +7,55 @@
     <script src="./main.js" defer></script>
     <title>ToDo List Development</title>
   </head>
-  <body></body>
+  <body>
+    <div class="flex flex-col justify-between h-screen">
+      <div class="col-span-full h-min my-3 bg-sky-300">
+        <header>
+          <h1 class="text-center text-4xl font-logo pt-3 pb-2">Todo List</h1>
+        </header>
+      </div>
+      <div class="sm:flex gap-5 h-full w-full">
+        <div
+          class="flex-none w-full min-w-[200px] sm:w-3/12 bg-cyan-200 pl-5 py-5"
+        >
+          <aside>
+            <h3 class="text-2xl mb-2">Home</h3>
+            <ul>
+              <li>All tasks</li>
+              <li>Today</li>
+              <li>Week</li>
+            </ul>
+            <h3 class="text-2xl mb-2">Project</h3>
+            <ul>
+              <li>Test project</li>
+            </ul>
+          </aside>
+        </div>
+        <div class="sm:flex-1 w-full sm:w-9/12">
+          <main class="w-full">
+            <h2 class="text-3xl mt-3 mb-4 text-center">Notes</h2>
+            <div class="">
+              <div class="bg-teal-50 my-2 p-4">Note 1</div>
+              <div class="bg-teal-50 my-2 p-4">Note 2</div>
+              <div class="bg-teal-50 my-2 p-4">Note 3</div>
+              <div class="bg-teal-50 my-2 p-4">Note 4</div>
+              <div class="bg-teal-50 my-2 p-4">Note 5</div>
+              <div class="bg-teal-50 my-2 p-4">Note 6</div>
+              <div class="bg-teal-50 my-2 p-4">Note 7</div>
+              <div class="bg-teal-50 my-2 p-4">Note 8</div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <div class="align-bottom bg-slate-300 h-min">
+        <footer>
+          <p class="text-center py-3">
+            Crystal Snake 2023
+            <a href="https://github.com/CrystalSnake">GitHub</a>
+          </p>
+        </footer>
+      </div>
+    </div>
+  </body>
 </html>
