@@ -20,6 +20,7 @@ function getContainer() {
   content.appendChild(getMain());
   container.appendChild(content);
   container.appendChild(getFooter());
+  container.appendChild(getModal());
   return container;
 }
 
@@ -44,7 +45,8 @@ function getAside() {
     'sm:w-3/12',
     'bg-sky-200',
     'pl-5',
-    'py-5'
+    'py-5',
+    'relative'
   );
   const menuContainer = document.createElement('div');
   menuContainer.classList.add(
@@ -76,6 +78,7 @@ function getAside() {
   menu.appendChild(getProjectList());
   menuContainer.appendChild(menu);
   asideContainer.appendChild(menuContainer);
+  asideContainer.appendChild(getAddButton());
   return asideContainer;
 }
 
@@ -91,6 +94,27 @@ function getProjectList() {
   projectsContainer.appendChild(projectsHead);
   projectsContainer.appendChild(projectsList);
   return projectsContainer;
+}
+
+function getAddButton() {
+  const addButton = document.createElement('button');
+  addButton.textContent = '+';
+  addButton.classList.add(
+    'absolute',
+    'bottom-10',
+    'left-10',
+    'bg-white',
+    'w-10',
+    'h-10',
+    'rounded-full',
+    'text-3xl',
+    'hover:bg-slate-100'
+  );
+  addButton.addEventListener('click', () => {
+    const modal = document.querySelector('.modal');
+    modal.classList.remove('hidden');
+  });
+  return addButton;
 }
 
 function getMain() {
@@ -127,4 +151,42 @@ function getFooter() {
   footer.appendChild(copyright);
   footerContainer.appendChild(footer);
   return footerContainer;
+}
+
+function getModal() {
+  const modalContainer = document.createElement('div');
+  modalContainer.classList.add(
+    'modal',
+    'absolute',
+    'top-0',
+    'left-0',
+    'w-full',
+    'h-full',
+    'hidden'
+  );
+  const overlay = document.createElement('div');
+  overlay.classList.add(
+    'bg-black',
+    'opacity-50',
+    'w-full',
+    'h-full',
+    'z-10',
+    'relative'
+  );
+  const modal = document.createElement('div');
+  modal.classList.add(
+    'absolute',
+    'max-w-[900px]',
+    'w-full',
+    'h-[400px]',
+    'bg-gray-100',
+    'top-24',
+    'left-0',
+    'right-0',
+    'mx-auto',
+    'z-20'
+  );
+  modalContainer.appendChild(overlay);
+  modalContainer.appendChild(modal);
+  return modalContainer;
 }
