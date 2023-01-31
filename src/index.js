@@ -184,9 +184,73 @@ function getModal() {
     'left-0',
     'right-0',
     'mx-auto',
-    'z-20'
+    'z-20',
+    'py-10',
+    'px-16'
   );
+  const modalHead = document.createElement('h2');
+  modalHead.classList.add('text-3xl', 'mb-2');
+  modalHead.textContent = 'Add';
+  modal.appendChild(modalHead);
+  const modalDescription = document.createElement('p');
+  modalDescription.textContent =
+    'To add a task or project, select the appropriate mode using the radio button. Then fill in all the fields marked with * and click "Create".';
+  modal.appendChild(modalDescription);
+  const addHead = document.createElement('h3');
+  addHead.classList.add('text-3xl', 'mb-2');
+  addHead.textContent = 'Add mode';
+  modal.appendChild(addHead);
+  const list = document.createElement('ul');
+  list.classList.add('grid', 'w-full', 'gap-5', 'sm:grid-cols-2');
+  list.appendChild(getModeButton('Note'));
+  list.appendChild(getModeButton('Project'));
+  modal.appendChild(list);
   modalContainer.appendChild(overlay);
   modalContainer.appendChild(modal);
   return modalContainer;
+}
+
+function getModeButton(mode) {
+  const listItem = document.createElement('li');
+  const input = document.createElement('input');
+  input.type = 'radio';
+  input.id = `${mode.toLowerCase()}`;
+  input.name = 'mode';
+  input.value = `${mode.toLowerCase()}`;
+  input.classList.add('hidden', 'peer');
+  listItem.appendChild(input);
+  const label = document.createElement('label');
+  label.setAttribute('for', `${mode.toLowerCase()}`);
+  label.classList.add(
+    'inline-flex',
+    'items-center',
+    'justify-between',
+    'w-full',
+    'p-5',
+    'text-gray-500',
+    'bg-white',
+    'border',
+    'border-gray-200',
+    'rounded-lg',
+    'cursor-pointer',
+    'dark:hover:text-gray-300',
+    'dark:border-gray-700',
+    'dark:peer-checked:text-blue-500',
+    'peer-checked:border-blue-600',
+    'peer-checked:text-blue-600',
+    'hover:text-gray-600',
+    'hover:bg-gray-100',
+    'dark:text-gray-400',
+    'dark:bg-gray-800',
+    'dark:hover:bg-gray-700'
+  );
+  const block = document.createElement('div');
+  label.appendChild(block);
+  const name = document.createElement('div');
+  name.classList.add('w-full', 'text-lg');
+  name.textContent = mode;
+  block.appendChild(name);
+  block.classList.add('block');
+  listItem.appendChild(label);
+  return listItem;
 }
