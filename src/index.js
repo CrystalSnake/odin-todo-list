@@ -178,7 +178,7 @@ function getModal() {
     'absolute',
     'max-w-[900px]',
     'w-full',
-    'h-[400px]',
+    'h-[600px]',
     'bg-gray-100',
     'top-24',
     'left-0',
@@ -194,7 +194,7 @@ function getModal() {
   modal.appendChild(modalHead);
   const modalDescription = document.createElement('p');
   modalDescription.textContent =
-    'To add a task or project, select the appropriate mode using the radio button. Then fill in all the fields marked with * and click "Create".';
+    'To add a task or project, select the appropriate mode using the radio button.';
   modal.appendChild(modalDescription);
   const addHead = document.createElement('h3');
   addHead.classList.add('text-3xl', 'mb-2');
@@ -202,9 +202,10 @@ function getModal() {
   modal.appendChild(addHead);
   const list = document.createElement('ul');
   list.classList.add('grid', 'w-full', 'gap-5', 'sm:grid-cols-2');
-  list.appendChild(getModeButton('Note'));
+  list.appendChild(getModeButton('Task'));
   list.appendChild(getModeButton('Project'));
   modal.appendChild(list);
+  modal.appendChild(getForm('note'));
   modalContainer.appendChild(overlay);
   modalContainer.appendChild(modal);
   return modalContainer;
@@ -253,4 +254,72 @@ function getModeButton(mode) {
   block.classList.add('block');
   listItem.appendChild(label);
   return listItem;
+}
+
+function getForm(mode) {
+  const formContainer = document.createElement('div');
+  const form = document.createElement('form');
+  if (mode === 'note') {
+    form.insertAdjacentHTML(
+      'beforeend',
+      `<div>
+		<form action="#" id="add-task" method="post">
+			<legend class="my-3">
+				Please fill all field marked with *, then press "Add" button.
+			</legend>
+			<div>
+				<label for="task-title">
+				<span class="block text-md font-medium">Task title*</span>
+				</label>
+				<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-title" id="task-title" required />
+			</div>
+	
+			<div>
+				<label for="task-description">
+					<span class="block text-md font-medium">Task description*</span>
+				</label>
+				<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="task-description"></textarea>
+			</div>
+		</form>
+	</div>`
+    );
+  } else {
+    form.insertAdjacentHTML(
+      'beforeend',
+      `<div>
+		<form action="#" id="add-project" method="post">
+			<legend class="my-3">
+				Please fill all field marked with *, then press "Add" button.
+			</legend>
+			<div>
+				<label for="project-title">
+				<span class="block text-md font-medium">Project title*</span>
+				</label>
+				<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="project-title" id="project-title" required />
+			</div>
+	
+			<div>
+				<label for="project-description">
+					<span class="block text-md font-medium">Project description*</span>
+				</label>
+				<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="project-description"></textarea>
+			</div>
+		</form>
+	</div>`
+    );
+  }
+  const buttons = document.createElement('div');
+  buttons.classList.add('flex', 'gap-3', 'justify-end', 'mt-3');
+  buttons.appendChild(getButton('Close', 'border-rose-500'));
+  buttons.appendChild(getButton('Add', 'border-blue-500'));
+  form.appendChild(buttons);
+  formContainer.appendChild(form);
+  return formContainer;
+}
+
+function getButton(name, color) {
+  const button = document.createElement('button');
+  button.classList.add('px-3', 'py-3', 'border', 'rounded-lg', color);
+  button.textContent = name;
+  return button;
 }
