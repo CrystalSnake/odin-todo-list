@@ -155,6 +155,7 @@ function getFooter() {
 
 function getModal() {
   const modalContainer = document.createElement('div');
+  modalContainer.setAttribute('id', 'modal');
   modalContainer.classList.add(
     'modal',
     'absolute',
@@ -197,7 +198,7 @@ function getModal() {
     'To add a task or project, select the appropriate mode using the radio button.';
   modal.appendChild(modalDescription);
   const addHead = document.createElement('h3');
-  addHead.classList.add('text-3xl', 'mb-2');
+  addHead.classList.add('text-xl', 'my-2');
   addHead.textContent = 'Add mode';
   modal.appendChild(addHead);
   const list = document.createElement('ul');
@@ -206,6 +207,14 @@ function getModal() {
   list.appendChild(getModeButton('Project'));
   modal.appendChild(list);
   modal.appendChild(getForm('note'));
+
+  const buttons = document.createElement('div');
+  buttons.classList.add('flex', 'gap-3', 'justify-end', 'mt-3');
+  buttons.appendChild(getButton('Close', 'border-rose-500', 'close'));
+
+  buttons.appendChild(getButton('Add', 'border-blue-500', 'add'));
+  modal.appendChild(buttons);
+
   modalContainer.appendChild(overlay);
   modalContainer.appendChild(modal);
   return modalContainer;
@@ -308,18 +317,22 @@ function getForm(mode) {
 	</div>`
     );
   }
-  const buttons = document.createElement('div');
-  buttons.classList.add('flex', 'gap-3', 'justify-end', 'mt-3');
-  buttons.appendChild(getButton('Close', 'border-rose-500'));
-  buttons.appendChild(getButton('Add', 'border-blue-500'));
-  form.appendChild(buttons);
   formContainer.appendChild(form);
   return formContainer;
 }
 
-function getButton(name, color) {
+function getButton(name, color, id) {
   const button = document.createElement('button');
   button.classList.add('px-3', 'py-3', 'border', 'rounded-lg', color);
+  button.setAttribute('id', id);
   button.textContent = name;
   return button;
 }
+
+function modalEL() {
+  const modal = document.getElementById('modal');
+  modal.classList.add('hidden');
+}
+
+const closeButton = document.querySelector('#close');
+closeButton.addEventListener('click', modalEL);
