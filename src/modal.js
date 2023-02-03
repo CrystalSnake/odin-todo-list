@@ -122,17 +122,17 @@ function getForm(mode) {
 				Please fill all field marked with *, then press "Add" button.
 			</legend>
 			<div>
-				<label for="task-title">
+				<label for="title">
 				<span class="block text-md font-medium">Task title*</span>
 				</label>
-				<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-title" id="task-title" required />
+				<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-title" id="title" required />
 			</div>
 	
 			<div>
-				<label for="task-description">
+				<label for="description">
 					<span class="block text-md font-medium">Task description*</span>
 				</label>
-				<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="task-description"></textarea>
+				<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="description"></textarea>
 			</div>
 		</form>
 	</div>`

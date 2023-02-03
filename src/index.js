@@ -1,6 +1,19 @@
 import './style.css';
 import modalContainer from './modal';
 
+const toDoList = [];
+
+class Task {
+  constructor(title, description, project) {
+    this.title = title;
+    this.description = description;
+    this.project = project;
+  }
+  add() {
+    toDoList.push(this);
+  }
+}
+
 document.body.classList.add('font-display');
 document.body.appendChild(getContainer());
 
@@ -159,4 +172,14 @@ const closeButton = document.querySelector('#close');
 closeButton.addEventListener('click', () => {
   const modal = document.getElementById('modal');
   modal.classList.add('hidden');
+});
+
+const addButton = document.querySelector('#add');
+addButton.addEventListener('click', () => {
+  const title = document.querySelector('#title');
+  const description = document.querySelector('#description');
+  console.log(title.value, description.value);
+  const newTask = new Task(title.value, description.value);
+  newTask.add();
+  console.log(toDoList);
 });
