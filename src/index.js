@@ -3,8 +3,9 @@ import modalContainer from './modal';
 
 const toDoList = [
   { title: 'asdfads', description: 'fsdfasdfasdf', project: undefined },
-  { title: 'sfasdf', description: 'sdfweghfdhn', project: undefined },
-  { title: 'lliosv', description: 'shylkaszxcdf', project: 'Test Project' },
+  { title: 'lliosv', description: 'sylkaszxcdf', project: 'Test Project' },
+  { title: 'isfosv', description: 'shylksfdaszxcdf', project: 'Test Project2' },
+  { title: 'lliosv', description: 'shkaszxcdf', project: 'Test Project' },
 ];
 
 class Task {
@@ -88,28 +89,41 @@ function getAside() {
   todayTasks.textContent = 'Today';
   const weekTasks = document.createElement('li');
   weekTasks.textContent = 'Week';
-  getProjectList();
+  const projectsContainer = document.createElement('div');
+  projectsContainer.setAttribute('id', 'projects');
   homeList.appendChild(allTasks);
   homeList.appendChild(todayTasks);
   homeList.appendChild(weekTasks);
   menu.appendChild(home);
   menu.appendChild(homeList);
-  menu.appendChild(getProjectList());
+  menu.appendChild(projectsContainer);
   menuContainer.appendChild(menu);
   asideContainer.appendChild(menuContainer);
   asideContainer.appendChild(getAddButton());
   return asideContainer;
 }
 
-function getProjectList() {
-  const projectsContainer = document.createElement('div');
+function getProjectsList() {
+  const projectsList = [];
+  for (let task of toDoList) {
+    if (task.project) {
+      projectsList.push(task.project);
+    }
+  }
+  return new Set(projectsList);
+}
+
+function renderProjectsList() {
+  const projectsContainer = document.querySelector('#projects');
   const projectsHead = document.createElement('h3');
   projectsHead.classList.add('text-3xl', 'mb-2');
   projectsHead.textContent = 'Projects';
   const projectsList = document.createElement('ul');
-  const listItem = document.createElement('li');
-  listItem.textContent = 'Test Project';
-  projectsList.appendChild(listItem);
+  for (let project of getProjectsList()) {
+    const listItem = document.createElement('li');
+    listItem.textContent = project;
+    projectsList.appendChild(listItem);
+  }
   projectsContainer.appendChild(projectsHead);
   projectsContainer.appendChild(projectsList);
   return projectsContainer;
@@ -143,10 +157,9 @@ function getMain() {
   main.classList.add('w-full');
   const mainHead = document.createElement('h2');
   mainHead.classList.add('text-4xl', 'mt-3', 'mb-4', 'text-center');
-  mainHead.textContent = 'Notes';
+  mainHead.textContent = 'Tasks';
   const notesList = document.createElement('div');
   notesList.setAttribute('id', 'notes-list');
-
   main.appendChild(mainHead);
   main.appendChild(notesList);
   mainContainer.appendChild(main);
@@ -182,7 +195,7 @@ function getFooter() {
   footerContainer.appendChild(footer);
   return footerContainer;
 }
-
+renderProjectsList();
 renderTasks();
 
 function stopDefAction(evt) {
