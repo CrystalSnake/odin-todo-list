@@ -115,6 +115,7 @@ function getProjectsList() {
 
 function renderProjectsList() {
   const projectsContainer = document.querySelector('#projects');
+  projectsContainer.textContent = '';
   const projectsHead = document.createElement('h3');
   projectsHead.classList.add('text-3xl', 'mb-2');
   projectsHead.textContent = 'Projects';
@@ -195,6 +196,7 @@ function getFooter() {
   footerContainer.appendChild(footer);
   return footerContainer;
 }
+
 renderProjectsList();
 renderTasks();
 
@@ -211,9 +213,11 @@ closeButton.addEventListener('click', () => {
 const addButton = document.querySelector('#add');
 addButton.addEventListener('click', () => {
   const title = document.querySelector('#title');
+  const taskProject = document.querySelector('#project');
   const description = document.querySelector('#description');
-  const newTask = new Task(title.value, description.value);
+  const newTask = new Task(title.value, description.value, taskProject.value);
   newTask.add();
   renderTasks();
+  renderProjectsList();
   console.log(toDoList);
 });

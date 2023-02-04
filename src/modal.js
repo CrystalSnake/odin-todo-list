@@ -71,6 +71,13 @@ function getForm() {
 		</div>
 
 		<div>
+			<label for="project">
+			<span class="block text-md font-medium">Task project</span>
+			</label>
+			<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-project" id="project" />
+		</div>
+
+		<div>
 			<label for="description">
 				<span class="block text-md font-medium">Task description</span>
 			</label>
