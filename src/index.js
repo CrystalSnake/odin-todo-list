@@ -1,7 +1,11 @@
 import './style.css';
 import modalContainer from './modal';
 
-const toDoList = [];
+const toDoList = [
+  { title: 'asdfads', description: 'fsdfasdfasdf', project: undefined },
+  { title: 'sfasdf', description: 'sdfweghfdhn', project: undefined },
+  { title: 'lliosv', description: 'shylkaszxcdf', project: 'Test Project' },
+];
 
 class Task {
   constructor(title, description, project) {
@@ -141,17 +145,28 @@ function getMain() {
   mainHead.classList.add('text-4xl', 'mt-3', 'mb-4', 'text-center');
   mainHead.textContent = 'Notes';
   const notesList = document.createElement('div');
-  notesList.appendChild(getNote());
+  notesList.setAttribute('id', 'notes-list');
+
   main.appendChild(mainHead);
   main.appendChild(notesList);
   mainContainer.appendChild(main);
   return mainContainer;
 }
 
-function getNote() {
+function renderTasks() {
+  const notesContainer = document.querySelector('#notes-list');
+  notesContainer.textContent = '';
+  for (let task in toDoList) {
+    notesContainer.appendChild(getTask(toDoList[task].title, task));
+  }
+  return notesContainer;
+}
+
+function getTask(title, id) {
   const note = document.createElement('div');
   note.classList.add('bg-teal-50', 'my-2', 'p-4');
-  note.textContent = 'Note 1';
+  note.textContent = title;
+  note.dataset.taskID = id;
   return note;
 }
 
@@ -168,6 +183,12 @@ function getFooter() {
   return footerContainer;
 }
 
+renderTasks();
+
+function stopDefAction(evt) {
+  evt.preventDefault();
+}
+
 const closeButton = document.querySelector('#close');
 closeButton.addEventListener('click', () => {
   const modal = document.getElementById('modal');
@@ -178,8 +199,8 @@ const addButton = document.querySelector('#add');
 addButton.addEventListener('click', () => {
   const title = document.querySelector('#title');
   const description = document.querySelector('#description');
-  console.log(title.value, description.value);
   const newTask = new Task(title.value, description.value);
   newTask.add();
+  renderTasks();
   console.log(toDoList);
 });

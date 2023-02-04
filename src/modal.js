@@ -130,7 +130,7 @@ function getForm(mode) {
 	
 			<div>
 				<label for="description">
-					<span class="block text-md font-medium">Task description*</span>
+					<span class="block text-md font-medium">Task description</span>
 				</label>
 				<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="description"></textarea>
 			</div>
@@ -170,6 +170,8 @@ function getButton(name, color, id) {
   const button = document.createElement('button');
   button.classList.add('px-3', 'py-3', 'border', 'rounded-lg', color);
   button.setAttribute('id', id);
+  button.setAttribute('type', 'submit');
+  button.setAttribute('form', 'add-task');
   button.textContent = name;
   return button;
 }
