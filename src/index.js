@@ -75,25 +75,16 @@ function getAside() {
     'min-w-[200px]',
     'sm:w-3/12',
     'bg-sky-200',
-    'pl-5',
-    'py-5',
-    'relative'
-  );
-  const menuContainer = document.createElement('div');
-  menuContainer.classList.add(
-    'flex-none',
-    'w-full',
-    'min-w-[200px]',
-    'sm:w-3/12',
-    'bg-sky-200',
-    'pl-5',
-    'py-5'
+    'relative',
+    'p-5',
+    'pl-7'
   );
   const menu = document.createElement('aside');
   const home = document.createElement('h3');
-  home.classList.add('text-3xl', 'mb-2');
+  home.classList.add('text-4xl', 'my-2');
   home.textContent = 'Home';
   const homeList = document.createElement('ul');
+  homeList.classList.add('text-xl');
   const allTasks = document.createElement('li');
   allTasks.textContent = 'All tasks';
   const todayTasks = document.createElement('li');
@@ -108,8 +99,7 @@ function getAside() {
   menu.appendChild(home);
   menu.appendChild(homeList);
   menu.appendChild(projectsContainer);
-  menuContainer.appendChild(menu);
-  asideContainer.appendChild(menuContainer);
+  asideContainer.appendChild(menu);
   asideContainer.appendChild(getAddButton());
   return asideContainer;
 }
@@ -128,9 +118,10 @@ function renderProjectsList() {
   const projectsContainer = document.querySelector('#projects');
   projectsContainer.textContent = '';
   const projectsHead = document.createElement('h3');
-  projectsHead.classList.add('text-3xl', 'mb-2');
+  projectsHead.classList.add('text-4xl', 'my-2');
   projectsHead.textContent = 'Projects';
   const projectsList = document.createElement('ul');
+  projectsList.classList.add('text-xl');
   for (let project of getProjectsList()) {
     const listItem = document.createElement('li');
     listItem.textContent = project;
@@ -191,14 +182,38 @@ function renderTasks() {
 
 function getTask(title, id, date) {
   const task = document.createElement('div');
-  task.classList.add('flex', 'justify-between', 'bg-teal-50', 'my-2', 'p-4');
+  task.classList.add(
+    'flex',
+    'justify-between',
+    'items-center',
+    'gap-3',
+    'bg-sky-100',
+    'my-2',
+    'py-3',
+    'px-5',
+    'rounded-tl-2xl'
+  );
   task.dataset.taskId = id;
+  const taskInfoContainer = document.createElement('div');
+  taskInfoContainer.classList.add(
+    'flex',
+    'justify-between',
+    'items-center',
+    'w-full'
+  );
   const taskTitle = document.createElement('h4');
+  taskTitle.classList.add('text-xl');
   taskTitle.textContent = title;
   const taskDate = document.createElement('p');
+  taskDate.classList.add('p-0');
   taskDate.textContent = date;
-  task.appendChild(taskTitle);
-  task.appendChild(taskDate);
+  taskInfoContainer.appendChild(taskTitle);
+  taskInfoContainer.appendChild(taskDate);
+  const taskDelete = document.createElement('button');
+  taskDelete.classList.add('pb-1', 'text-rose-700', 'text-2xl');
+  taskDelete.textContent = '×';
+  task.appendChild(taskInfoContainer);
+  task.appendChild(taskDelete);
   return task;
 }
 
