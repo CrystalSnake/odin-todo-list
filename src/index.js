@@ -2,10 +2,20 @@ import './style.css';
 import modalContainer from './modal';
 
 const toDoList = [
-  { title: 'asdfads', description: 'fsdfasdfasdf', project: undefined },
+  {
+    title: 'asdfads',
+    description: 'fsdfasdfasdf',
+    project: undefined,
+    date: '2023-02-10',
+  },
   { title: 'lliosv', description: 'sylkaszxcdf', project: 'Test Project' },
   { title: 'isfosv', description: 'shylksfdaszxcdf', project: 'Test Project2' },
-  { title: 'lliosv', description: 'shkaszxcdf', project: 'Test Project' },
+  {
+    title: 'lliosv',
+    description: 'shkaszxcdf',
+    project: 'Test Project',
+    date: '2023-02-17',
+  },
 ];
 
 class Task {
@@ -172,17 +182,24 @@ function renderTasks() {
   const notesContainer = document.querySelector('#notes-list');
   notesContainer.textContent = '';
   for (let task in toDoList) {
-    notesContainer.appendChild(getTask(toDoList[task].title, task));
+    notesContainer.appendChild(
+      getTask(toDoList[task].title, task, toDoList[task].date)
+    );
   }
   return notesContainer;
 }
 
-function getTask(title, id) {
-  const note = document.createElement('div');
-  note.classList.add('bg-teal-50', 'my-2', 'p-4');
-  note.textContent = title;
-  note.dataset.taskID = id;
-  return note;
+function getTask(title, id, date) {
+  const task = document.createElement('div');
+  task.classList.add('flex', 'justify-between', 'bg-teal-50', 'my-2', 'p-4');
+  task.dataset.taskId = id;
+  const taskTitle = document.createElement('h4');
+  taskTitle.textContent = title;
+  const taskDate = document.createElement('p');
+  taskDate.textContent = date;
+  task.appendChild(taskTitle);
+  task.appendChild(taskDate);
+  return task;
 }
 
 function getFooter() {
