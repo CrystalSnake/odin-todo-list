@@ -3,7 +3,6 @@ import modalContainer from './modal';
 import Task from './task';
 //import renderTasks from './task';
 import toDoList from './todolist';
-//import getProjectsList from './project';
 import renderProjectsList from './project';
 
 document.body.classList.add('font-display');
@@ -61,17 +60,19 @@ function getAside() {
   home.textContent = 'Home';
   const homeList = document.createElement('ul');
   homeList.classList.add('text-xl');
-  const allTasks = document.createElement('li');
-  allTasks.textContent = 'All tasks';
-  const todayTasks = document.createElement('li');
-  todayTasks.textContent = 'Today';
-  const weekTasks = document.createElement('li');
-  weekTasks.textContent = 'Week';
+  for (let i of [
+    { title: 'All tasks', id: 'all' },
+    { title: 'Today', id: 'today' },
+    { title: 'Week', id: 'week' },
+  ]) {
+    const li = document.createElement('li');
+    li.textContent = i.title;
+    li.classList.add('cursor-pointer');
+    li.setAttribute('id', i.id);
+    homeList.appendChild(li);
+  }
   const projectsContainer = document.createElement('div');
   projectsContainer.setAttribute('id', 'projects');
-  homeList.appendChild(allTasks);
-  homeList.appendChild(todayTasks);
-  homeList.appendChild(weekTasks);
   menu.appendChild(home);
   menu.appendChild(homeList);
   menu.appendChild(projectsContainer);
@@ -130,10 +131,10 @@ function getFooter() {
   return footerContainer;
 }
 
-function renderTasks() {
+function renderTasks(list) {
   const notesContainer = document.querySelector('#notes-list');
   notesContainer.textContent = '';
-  for (let task in toDoList) {
+  for (let task in list) {
     const taskCard = document.createElement('div');
     taskCard.classList.add(
       'task-card',
@@ -157,10 +158,10 @@ function renderTasks() {
     );
     const taskTitle = document.createElement('h4');
     taskTitle.classList.add('text-xl');
-    taskTitle.textContent = toDoList[task].title;
+    taskTitle.textContent = list[task].title;
     const taskDate = document.createElement('p');
     taskDate.classList.add('p-0');
-    taskDate.textContent = toDoList[task].date;
+    taskDate.textContent = list[task].date;
     taskInfoContainer.appendChild(taskTitle);
     taskInfoContainer.appendChild(taskDate);
     const taskDelete = document.createElement('button');
@@ -173,13 +174,16 @@ function renderTasks() {
   }
 }
 
+const all = document.querySelector('#all');
+all.addEventListener('click', () => renderTasks(toDoList));
+
 renderProjectsList();
-renderTasks();
+renderTasks(toDoList);
 
 function delTaskListener(e) {
   toDoList.splice(e.target.closest('.task-card').dataset.taskId, 1);
   renderProjectsList();
-  renderTasks();
+  renderTasks(toDoList);
 }
 
 const closeButton = document.querySelector('#close');
@@ -201,6 +205,8 @@ addButton.addEventListener('click', () => {
     date.value
   );
   newTask.add();
-  renderTasks();
+  renderTasks(toDoList);
   renderProjectsList();
 });
+
+export default renderTasks;
