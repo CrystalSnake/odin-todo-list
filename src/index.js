@@ -1,46 +1,10 @@
 import './style.css';
 import modalContainer from './modal';
-
-const toDoList = [
-  {
-    title: 'Task 1',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-    project: undefined,
-    date: '2023-02-10',
-  },
-  {
-    title: 'Task 2',
-    description:
-      'Luctus accumsan tortor posuere ac ut. Ultricies mi quis hendrerit dolor magna eget est lorem.',
-    project: 'Test Project',
-  },
-  {
-    title: 'Test',
-    description:
-      'Feugiat nisl pretium fusce id velit ut tortor pretium. Ac turpis egestas sed tempus urna.',
-    project: 'My Project',
-  },
-  {
-    title: 'Test task',
-    description:
-      'Magna fermentum iaculis eu non. Volutpat est velit egestas dui.',
-    project: 'Test Project',
-    date: '2023-02-17',
-  },
-];
-
-class Task {
-  constructor(title, description, project, date) {
-    this.title = title;
-    this.description = description;
-    this.project = project;
-    this.date = date;
-  }
-  add() {
-    toDoList.push(this);
-  }
-}
+import Task from './task';
+//import renderTasks from './task';
+import toDoList from './todolist';
+//import getProjectsList from './project';
+import renderProjectsList from './project';
 
 document.body.classList.add('font-display');
 document.body.appendChild(getContainer());
@@ -116,34 +80,6 @@ function getAside() {
   return asideContainer;
 }
 
-function getProjectsList() {
-  const projectsList = [];
-  for (let task of toDoList) {
-    if (task.project) {
-      projectsList.push(task.project);
-    }
-  }
-  return new Set(projectsList);
-}
-
-function renderProjectsList() {
-  const projectsContainer = document.querySelector('#projects');
-  projectsContainer.textContent = '';
-  const projectsHead = document.createElement('h3');
-  projectsHead.classList.add('text-4xl', 'my-2');
-  projectsHead.textContent = 'Projects';
-  const projectsList = document.createElement('ul');
-  projectsList.classList.add('text-xl');
-  for (let project of getProjectsList()) {
-    const listItem = document.createElement('li');
-    listItem.textContent = project;
-    projectsList.appendChild(listItem);
-  }
-  projectsContainer.appendChild(projectsHead);
-  projectsContainer.appendChild(projectsList);
-  return projectsContainer;
-}
-
 function getAddButton() {
   const addButton = document.createElement('button');
   addButton.textContent = '+';
@@ -181,59 +117,6 @@ function getMain() {
   return mainContainer;
 }
 
-function renderTasks() {
-  const notesContainer = document.querySelector('#notes-list');
-  notesContainer.textContent = '';
-  for (let task in toDoList) {
-    notesContainer.appendChild(
-      getTask(toDoList[task].title, task, toDoList[task].date)
-    );
-  }
-  return notesContainer;
-}
-
-function getTask(title, id, date) {
-  const task = document.createElement('div');
-  task.classList.add(
-    'flex',
-    'justify-between',
-    'items-center',
-    'gap-3',
-    'bg-sky-100',
-    'my-2',
-    'py-3',
-    'px-5',
-    'rounded-tl-2xl'
-  );
-  task.dataset.taskId = id;
-  const taskInfoContainer = document.createElement('div');
-  taskInfoContainer.classList.add(
-    'flex',
-    'justify-between',
-    'items-center',
-    'w-full'
-  );
-  const taskTitle = document.createElement('h4');
-  taskTitle.classList.add('text-xl');
-  taskTitle.textContent = title;
-  const taskDate = document.createElement('p');
-  taskDate.classList.add('p-0');
-  taskDate.textContent = date;
-  taskInfoContainer.appendChild(taskTitle);
-  taskInfoContainer.appendChild(taskDate);
-  const taskDelete = document.createElement('button');
-  taskDelete.classList.add('pb-1', 'text-rose-700', 'text-2xl');
-  taskDelete.textContent = '×';
-  taskDelete.addEventListener('click', () => {
-    toDoList.splice(task.dataset.taskId, 1);
-    renderProjectsList();
-    renderTasks();
-  });
-  task.appendChild(taskInfoContainer);
-  task.appendChild(taskDelete);
-  return task;
-}
-
 function getFooter() {
   const footerContainer = document.createElement('div');
   footerContainer.classList.add('align-bottom', 'bg-slate-300', 'h-min');
@@ -247,11 +130,56 @@ function getFooter() {
   return footerContainer;
 }
 
+function renderTasks() {
+  const notesContainer = document.querySelector('#notes-list');
+  notesContainer.textContent = '';
+  for (let task in toDoList) {
+    const taskCard = document.createElement('div');
+    taskCard.classList.add(
+      'task-card',
+      'flex',
+      'justify-between',
+      'items-center',
+      'gap-3',
+      'bg-sky-100',
+      'my-2',
+      'py-3',
+      'px-5',
+      'rounded-tl-2xl'
+    );
+    taskCard.dataset.taskId = task;
+    const taskInfoContainer = document.createElement('div');
+    taskInfoContainer.classList.add(
+      'flex',
+      'justify-between',
+      'items-center',
+      'w-full'
+    );
+    const taskTitle = document.createElement('h4');
+    taskTitle.classList.add('text-xl');
+    taskTitle.textContent = toDoList[task].title;
+    const taskDate = document.createElement('p');
+    taskDate.classList.add('p-0');
+    taskDate.textContent = toDoList[task].date;
+    taskInfoContainer.appendChild(taskTitle);
+    taskInfoContainer.appendChild(taskDate);
+    const taskDelete = document.createElement('button');
+    taskDelete.classList.add('pb-1', 'text-rose-700', 'text-2xl');
+    taskDelete.textContent = '×';
+    taskDelete.addEventListener('click', delTaskListener);
+    taskCard.appendChild(taskInfoContainer);
+    taskCard.appendChild(taskDelete);
+    notesContainer.appendChild(taskCard);
+  }
+}
+
 renderProjectsList();
 renderTasks();
 
-function stopDefAction(evt) {
-  evt.preventDefault();
+function delTaskListener(e) {
+  toDoList.splice(e.target.closest('.task-card').dataset.taskId, 1);
+  renderProjectsList();
+  renderTasks();
 }
 
 const closeButton = document.querySelector('#close');
@@ -275,5 +203,4 @@ addButton.addEventListener('click', () => {
   newTask.add();
   renderTasks();
   renderProjectsList();
-  console.log(toDoList);
 });
