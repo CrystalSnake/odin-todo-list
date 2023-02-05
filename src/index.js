@@ -9,10 +9,11 @@ const toDoList = [
 ];
 
 class Task {
-  constructor(title, description, project) {
+  constructor(title, description, project, date) {
     this.title = title;
     this.description = description;
     this.project = project;
+    this.date = date;
   }
   add() {
     toDoList.push(this);
@@ -215,7 +216,13 @@ addButton.addEventListener('click', () => {
   const title = document.querySelector('#title');
   const taskProject = document.querySelector('#project');
   const description = document.querySelector('#description');
-  const newTask = new Task(title.value, description.value, taskProject.value);
+  const date = document.querySelector('#date');
+  const newTask = new Task(
+    title.value,
+    description.value,
+    taskProject.value,
+    date.value
+  );
   newTask.add();
   renderTasks();
   renderProjectsList();

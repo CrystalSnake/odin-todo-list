@@ -36,12 +36,8 @@ function getModal() {
   );
   const modalHead = document.createElement('h2');
   modalHead.classList.add('text-3xl', 'mb-2');
-  modalHead.textContent = 'Add';
+  modalHead.textContent = 'Add task';
   modal.appendChild(modalHead);
-  const modalDescription = document.createElement('p');
-  modalDescription.textContent =
-    'To add a task or project, select the appropriate mode using the radio button.';
-  modal.appendChild(modalDescription);
   modal.appendChild(getForm());
   const buttons = document.createElement('div');
   buttons.classList.add('flex', 'gap-3', 'justify-end', 'mt-3');
@@ -76,6 +72,13 @@ function getForm() {
 			</label>
 			<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-project" id="project" />
 		</div>
+
+		<div>
+		<label for="project">
+		<span class="block text-md font-medium">Task date</span>
+		</label>
+		<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="date" name="task-data" id="date" />
+	</div>
 
 		<div>
 			<label for="description">
