@@ -1,7 +1,6 @@
 import './style.css';
 import modalContainer from './modal';
 import Task from './task';
-//import renderTasks from './task';
 import toDoList from './todolist';
 import renderProjectsList from './project';
 
@@ -183,7 +182,7 @@ renderTasks(toDoList);
 function delTaskListener(e) {
   toDoList.splice(e.target.closest('.task-card').dataset.taskId, 1);
   renderProjectsList();
-  renderTasks(toDoList);
+  e.target.closest('.task-card').remove();
 }
 
 const closeButton = document.querySelector('#close');
