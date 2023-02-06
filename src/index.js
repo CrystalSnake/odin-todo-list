@@ -60,14 +60,15 @@ function getAside() {
   const homeList = document.createElement('ul');
   homeList.classList.add('text-xl');
   for (let i of [
-    { title: 'All tasks', id: 'all' },
-    { title: 'Today', id: 'today' },
-    { title: 'Week', id: 'week' },
+    { title: 'All tasks', id: 'all', listenerList: toDoList },
+    { title: 'Today', id: 'today', listenerList: toDoList },
+    { title: 'Week', id: 'week', listenerList: toDoList },
   ]) {
     const li = document.createElement('li');
     li.textContent = i.title;
     li.classList.add('cursor-pointer');
     li.setAttribute('id', i.id);
+    li.addEventListener('click', (e) => renderTasks(i.listenerList));
     homeList.appendChild(li);
   }
   const projectsContainer = document.createElement('div');
@@ -173,9 +174,6 @@ function renderTasks(list) {
   }
 }
 
-const all = document.querySelector('#all');
-all.addEventListener('click', () => renderTasks(toDoList));
-
 renderProjectsList();
 renderTasks(toDoList);
 
@@ -193,15 +191,11 @@ closeButton.addEventListener('click', () => {
 
 const addButton = document.querySelector('#add');
 addButton.addEventListener('click', () => {
-  const title = document.querySelector('#title');
-  const taskProject = document.querySelector('#project');
-  const description = document.querySelector('#description');
-  const date = document.querySelector('#date');
   const newTask = new Task(
-    title.value,
-    description.value,
-    taskProject.value,
-    date.value
+    document.querySelector('#title').value,
+    document.querySelector('#description').value,
+    document.querySelector('#project').value,
+    document.querySelector('#date').value
   );
   newTask.add();
   renderTasks(toDoList);

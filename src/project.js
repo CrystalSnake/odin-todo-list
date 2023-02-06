@@ -23,16 +23,16 @@ function renderProjectsList() {
     const listItem = document.createElement('li');
     listItem.classList.add('cursor-pointer');
     listItem.textContent = project;
-    listItem.addEventListener('click', filterTaskProject);
+    listItem.addEventListener('click', (e) => {
+      renderTasks(
+        toDoList.filter((task) => task.project === e.target.textContent)
+      );
+    });
     projectsList.appendChild(listItem);
   }
   projectsContainer.appendChild(projectsHead);
   projectsContainer.appendChild(projectsList);
   return projectsContainer;
-}
-
-function filterTaskProject(e) {
-  renderTasks(toDoList.filter((task) => task.project === e.target.textContent));
 }
 
 export default renderProjectsList;
