@@ -4,14 +4,6 @@ import Task from './task';
 import toDoList from './todolist';
 import renderProjectsList from './project';
 
-const todayTasks = [];
-let todayDate = new Date().toISOString().split('T')[0];
-for (let task of toDoList) {
-  if (task.date === todayDate) {
-    todayTasks.push(task);
-  }
-}
-
 document.body.classList.add('font-display');
 document.body.appendChild(getContainer());
 
@@ -72,7 +64,7 @@ function getAside() {
     {
       title: 'Today',
       id: 'today',
-      listenerList: todayTasks.filter(
+      listenerList: toDoList.filter(
         (task) => task.date === new Date().toISOString().split('T')[0]
       ),
     },
