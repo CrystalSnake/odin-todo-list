@@ -4,6 +4,14 @@ import Task from './task';
 import toDoList from './todolist';
 import renderProjectsList from './project';
 
+const todayTasks = [];
+let todayDate = new Date().toISOString().split('T')[0];
+for (let task of toDoList) {
+  if (task.date === todayDate) {
+    todayTasks.push(task);
+  }
+}
+
 document.body.classList.add('font-display');
 document.body.appendChild(getContainer());
 
@@ -61,7 +69,13 @@ function getAside() {
   homeList.classList.add('text-xl');
   for (let i of [
     { title: 'All tasks', id: 'all', listenerList: toDoList },
-    { title: 'Today', id: 'today', listenerList: toDoList },
+    {
+      title: 'Today',
+      id: 'today',
+      listenerList: todayTasks.filter(
+        (task) => task.date === new Date().toISOString().split('T')[0]
+      ),
+    },
     { title: 'Week', id: 'week', listenerList: toDoList },
   ]) {
     const li = document.createElement('li');

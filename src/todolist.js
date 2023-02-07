@@ -23,7 +23,7 @@ const toDoList = [
     description:
       'Magna fermentum iaculis eu non. Volutpat est velit egestas dui.',
     project: 'Test Project',
-    date: '2023-02-17',
+    date: '2023-02-07',
   },
 ];
 
