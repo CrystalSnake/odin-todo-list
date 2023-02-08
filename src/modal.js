@@ -1,3 +1,7 @@
+import { renderProjectsList, renderTaskList } from './renders';
+import Task from './task';
+import toDoList from './todolist';
+
 function getModal() {
   const modalContainer = document.createElement('div');
   modalContainer.setAttribute('id', 'modal');
@@ -100,6 +104,24 @@ function getButton(name, color, id) {
   button.setAttribute('type', 'submit');
   button.setAttribute('form', 'add-task');
   button.textContent = name;
+  if (id === 'add') {
+    button.addEventListener('click', () => {
+      const newTask = new Task(
+        document.querySelector('#title').value,
+        document.querySelector('#description').value,
+        document.querySelector('#project').value,
+        document.querySelector('#date').value
+      );
+      newTask.add();
+      renderProjectsList(toDoList);
+      renderTaskList(toDoList);
+    });
+  } else if (id === 'close') {
+    button.addEventListener('click', () => {
+      const modal = document.getElementById('modal');
+      modal.classList.add('hidden');
+    });
+  }
   return button;
 }
 

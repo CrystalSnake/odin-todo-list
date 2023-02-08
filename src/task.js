@@ -1,5 +1,4 @@
 import toDoList from './todolist';
-import renderProjectsList from './project';
 
 class Task {
   constructor(title, description, project, date) {
@@ -12,4 +11,5 @@ class Task {
     toDoList.push(this);
   }
 }
+
 export default Task;
