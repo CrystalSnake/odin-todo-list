@@ -9,6 +9,22 @@ function renderUI() {
 
 //Tasks
 
+function getSetList() {
+  let taskFilterList = toDoList;
+
+  Object.defineProperty(this, 'taskFilterList', {
+    get() {
+      return taskFilterList;
+    },
+    set(value) {
+      taskFilterList = value;
+    },
+  });
+}
+
+const list = new getSetList();
+console.log(list.taskFilterList);
+
 function renderTask(task, id) {
   const taskCard = document.createElement('div');
   taskCard.classList.add(
@@ -48,11 +64,11 @@ function renderTask(task, id) {
   return taskCard;
 }
 
-function renderTaskList(list) {
+function renderTaskList() {
   const notesContainer = document.querySelector('#notes-list');
   notesContainer.textContent = '';
-  for (let task in list) {
-    notesContainer.appendChild(renderTask(list[task], task));
+  for (let task in list.taskFilterList) {
+    notesContainer.appendChild(renderTask(list.taskFilterList[task], task));
   }
 }
 
@@ -77,9 +93,10 @@ function renderProjectsList() {
     listItem.classList.add('cursor-pointer');
     listItem.textContent = project;
     listItem.addEventListener('click', (e) => {
-      renderTaskList(
-        toDoList.filter((task) => task.project === e.target.textContent)
+      list.taskFilterList = toDoList.filter(
+        (task) => task.project === e.target.textContent
       );
+      renderTaskList();
     });
     projectsList.appendChild(listItem);
   }
@@ -88,4 +105,4 @@ function renderProjectsList() {
   return projectsContainer;
 }
 
-export { renderUI, renderProjectsList, renderTaskList };
+export { list, renderUI, renderProjectsList, renderTaskList };

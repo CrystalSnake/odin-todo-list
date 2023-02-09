@@ -1,6 +1,5 @@
 import { renderProjectsList, renderTaskList } from './renders';
 import Task from './task';
-import toDoList from './todolist';
 
 function getModal() {
   const modalContainer = document.createElement('div');
@@ -113,8 +112,8 @@ function getButton(name, color, id) {
         document.querySelector('#date').value
       );
       newTask.add();
-      renderProjectsList(toDoList);
-      renderTaskList(toDoList);
+      renderProjectsList();
+      renderTaskList();
     });
   } else if (id === 'close') {
     button.addEventListener('click', () => {

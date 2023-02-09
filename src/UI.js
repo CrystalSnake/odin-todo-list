@@ -1,6 +1,6 @@
 import modalContainer from './modal';
 import toDoList from './todolist';
-import { renderTaskList } from './renders';
+import { list, renderTaskList } from './renders';
 
 function getContainer() {
   const container = document.createElement('div');
@@ -54,22 +54,23 @@ function getAside() {
   home.textContent = 'Home';
   const homeList = document.createElement('ul');
   homeList.classList.add('text-xl');
-  for (let i of [
-    { title: 'All tasks', id: 'all', listenerList: toDoList },
-    {
-      title: 'Today',
-      id: 'today',
-      listenerList: toDoList.filter(
-        (task) => task.date === new Date().toISOString().split('T')[0]
-      ),
-    },
-    { title: 'Week', id: 'week', listenerList: toDoList },
-  ]) {
+  for (let i of ['All tasks', 'Today', 'Week']) {
     const li = document.createElement('li');
-    li.textContent = i.title;
+    li.textContent = i;
     li.classList.add('cursor-pointer');
-    li.setAttribute('id', i.id);
-    li.addEventListener('click', (e) => renderTaskList(i.listenerList));
+    li.addEventListener('click', (e) => {
+      console.log(i);
+      if (i === 'All tasks') {
+        list.taskFilterList = toDoList;
+      } else if (i === 'Today') {
+        list.taskFilterList = toDoList.filter(
+          (task) => task.date === new Date().toISOString().split('T')[0]
+        );
+      } else {
+        list.taskFilterList = toDoList;
+      }
+      renderTaskList();
+    });
     homeList.appendChild(li);
   }
   const projectsContainer = document.createElement('div');
