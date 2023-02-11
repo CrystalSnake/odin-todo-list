@@ -12,4 +12,19 @@ class Task {
   }
 }
 
-export default Task;
+function getSetList() {
+  let taskFilterList = toDoList;
+
+  Object.defineProperty(this, 'taskFilterList', {
+    get() {
+      return taskFilterList;
+    },
+    set(value) {
+      taskFilterList = value;
+    },
+  });
+}
+
+const list = new getSetList();
+
+export { list, Task };

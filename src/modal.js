@@ -1,5 +1,5 @@
 import { renderProjectsList, renderTaskList } from './renders';
-import Task from './task';
+import { Task } from './task';
 
 function getModal() {
   const modalContainer = document.createElement('div');

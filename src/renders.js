@@ -1,6 +1,7 @@
 import toDoList from './todolist';
 import getProjectsList from './project';
 import getContainer from './UI';
+import { list } from './task';
 
 function renderUI() {
   document.body.classList.add('font-display');
@@ -8,21 +9,6 @@ function renderUI() {
 }
 
 //Tasks
-
-function getSetList() {
-  let taskFilterList = toDoList;
-
-  Object.defineProperty(this, 'taskFilterList', {
-    get() {
-      return taskFilterList;
-    },
-    set(value) {
-      taskFilterList = value;
-    },
-  });
-}
-
-const list = new getSetList();
 
 function renderTask(task, id) {
   const taskCard = document.createElement('div');
