@@ -23,7 +23,6 @@ function getSetList() {
 }
 
 const list = new getSetList();
-console.log(list.taskFilterList);
 
 function renderTask(task, id) {
   const taskCard = document.createElement('div');

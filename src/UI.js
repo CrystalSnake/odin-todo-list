@@ -1,3 +1,4 @@
+import isThisWeek from 'date-fns/isThisWeek';
 import modalContainer from './modal';
 import toDoList from './todolist';
 import { list, renderTaskList } from './renders';
@@ -59,9 +60,10 @@ function getAside() {
     li.textContent = i;
     li.classList.add('cursor-pointer');
     li.addEventListener('click', (e) => {
-      console.log(i);
-      if (i === 'All tasks') {
-        list.taskFilterList = toDoList;
+      if (i === 'Week') {
+        list.taskFilterList = toDoList.filter((task) =>
+          isThisWeek(new Date(task.date))
+        );
       } else if (i === 'Today') {
         list.taskFilterList = toDoList.filter(
           (task) => task.date === new Date().toISOString().split('T')[0]
