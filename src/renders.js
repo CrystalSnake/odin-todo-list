@@ -27,14 +27,17 @@ function renderTask(task, id) {
   taskCard.dataset.taskId = id;
   const taskInfoContainer = document.createElement('div');
   taskInfoContainer.classList.add(
+    'task-card-text',
     'flex',
+    'flex-wrap',
     'justify-between',
     'items-center',
     'w-full'
   );
   const taskTitle = document.createElement('h4');
-  taskTitle.classList.add('text-xl');
+  taskTitle.classList.add('text-xl', 'cursor-pointer');
   taskTitle.textContent = task.title;
+  taskTitle.addEventListener('click', expandTaskCard);
   const taskDate = document.createElement('p');
   taskDate.classList.add('p-0');
   taskDate.textContent = task.date;
@@ -47,6 +50,18 @@ function renderTask(task, id) {
   taskCard.appendChild(taskInfoContainer);
   taskCard.appendChild(taskDelete);
   return taskCard;
+}
+
+function expandTaskCard(e) {
+  if (document.querySelector('.task-description')) {
+    document.querySelector('.task-description').remove();
+  } else {
+    const description = document.createElement('div');
+    description.classList.add('task-description', 'w-full', 'mt-2');
+    description.textContent =
+      toDoList[e.target.closest('.task-card').dataset.taskId].description;
+    e.target.closest('.task-card-text').appendChild(description);
+  }
 }
 
 function renderTaskList() {
@@ -62,6 +77,7 @@ function delTaskListener(e) {
   localStorage.setItem('tasks', JSON.stringify(toDoList));
   renderProjectsList();
   e.target.closest('.task-card').remove();
+  e.stopPropagation();
 }
 
 //Projects

@@ -113,7 +113,6 @@ function getButton(name, color, id) {
         document.querySelector('#date').value
       );
       newTask.add();
-      console.log(newTask);
       renderProjectsList();
       renderTaskList();
       localStorage.setItem('tasks', JSON.stringify(toDoList));
