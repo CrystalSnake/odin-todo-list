@@ -1,4 +1,4 @@
-import toDoList from './todolist';
+import toDoList from './storage';
 
 function getProjectsList() {
   const projectsList = [];

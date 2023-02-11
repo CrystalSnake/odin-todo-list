@@ -1,4 +1,4 @@
-import toDoList from './todolist';
+import toDoList from './storage';
 
 class Task {
   constructor(title, description, project, date) {

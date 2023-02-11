@@ -1,4 +1,5 @@
 import { renderProjectsList, renderTaskList } from './renders';
+import toDoList from './storage';
 import { Task } from './task';
 
 function getModal() {
@@ -112,8 +113,10 @@ function getButton(name, color, id) {
         document.querySelector('#date').value
       );
       newTask.add();
+      console.log(newTask);
       renderProjectsList();
       renderTaskList();
+      localStorage.setItem('tasks', JSON.stringify(toDoList));
     });
   } else if (id === 'close') {
     button.addEventListener('click', () => {

@@ -1,4 +1,4 @@
-import toDoList from './todolist';
+import toDoList from './storage';
 import getProjectsList from './project';
 import getContainer from './UI';
 import { list } from './task';
@@ -59,6 +59,7 @@ function renderTaskList() {
 
 function delTaskListener(e) {
   toDoList.splice(e.target.closest('.task-card').dataset.taskId, 1);
+  localStorage.setItem('tasks', JSON.stringify(toDoList));
   renderProjectsList();
   e.target.closest('.task-card').remove();
 }
