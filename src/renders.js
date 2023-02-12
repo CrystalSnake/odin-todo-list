@@ -86,30 +86,26 @@ function editTaskCard(e) {
   editHeader.textContent = 'Editing';
   editHeader.classList.add('text-xl');
   editForm.appendChild(editHeader);
-  // 		<div>
   // 			<label for="project">
   // 			<span class="block text-md font-medium">Task project</span>
   // 			</label>
   // 			<input class="project-edit h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-project" id="project" />
-  // 		</div>
 
-  // 		<div>
   // 		<label for="date">
   // 		<span class="block text-md font-medium">Task date</span>
   // 		</label>
   // 		<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="date" name="task-data" id="date" />
-  // 	</div>
 
-  // 		<div>
   // 			<label for="description">
   // 				<span class="block text-md font-medium">Task description</span>
   // 			</label>
   // 			<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="description"></textarea>
-  // 		</div>
+
   const form = document.createElement('form');
   form.setAttribute('action', '#');
   form.setAttribute('id', 'edit-task');
   form.setAttribute('method', 'post');
+
   const nameLabel = document.createElement('label');
   nameLabel.setAttribute('for', 'title');
   nameLabel.textContent = 'Task title';
@@ -120,6 +116,7 @@ function editTaskCard(e) {
     `${toDoList[e.target.closest('.task-card').dataset.taskId].title}`
   );
   nameInput.classList.add(
+    'w-full',
     'h-10',
     'px-3',
     'border',
@@ -131,13 +128,39 @@ function editTaskCard(e) {
   nameInput.setAttribute('name', 'task-title');
   nameInput.setAttribute('id', 'title');
   form.appendChild(nameInput);
+
+  const projectLabel = document.createElement('label');
+  projectLabel.setAttribute('for', 'project');
+  projectLabel.textContent = 'Task project';
+  form.appendChild(projectLabel);
+  const projectInput = document.createElement('input');
+  projectInput.setAttribute(
+    'value',
+    `${toDoList[e.target.closest('.task-card').dataset.taskId].project}`
+  );
+  projectInput.classList.add(
+    'w-full',
+    'h-10',
+    'px-3',
+    'border',
+    'border-gray-200',
+    'rounded-lg',
+    'focus-visible:outline-blue-600'
+  );
+  projectInput.setAttribute('type', 'text');
+  projectInput.setAttribute('name', 'task-project');
+  projectInput.setAttribute('id', 'project');
+  form.appendChild(projectInput);
+
   editForm.appendChild(form);
   const save = document.createElement('button');
   save.textContent = 'Save';
-  save.classList.add('bg-white', 'rounded-md', 'py-1', 'px-2');
+  save.classList.add('bg-white', 'rounded-md', 'py-1', 'px-2', 'mt-2');
   save.addEventListener('click', (e) => {
     toDoList[e.target.closest('.task-card').dataset.taskId].title =
       nameInput.value;
+    toDoList[e.target.closest('.task-card').dataset.taskId].project =
+      projectInput.value;
     localStorage.setItem('tasks', JSON.stringify(toDoList));
     renderProjectsList();
     renderTaskList();
