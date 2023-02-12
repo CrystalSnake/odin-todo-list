@@ -2,7 +2,6 @@ import toDoList from './storage';
 import getProjectsList from './project';
 import getContainer from './UI';
 import { list } from './task';
-import { de } from 'date-fns/locale';
 
 function renderUI() {
   document.body.classList.add('font-display');
