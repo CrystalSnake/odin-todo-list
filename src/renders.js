@@ -58,9 +58,9 @@ function expandTaskCard(e) {
     document.querySelector('.expand').remove();
   } else {
     const expand = document.createElement('div');
-    expand.classList.add('expand');
+    expand.classList.add('expand', 'w-full');
     const description = document.createElement('div');
-    description.classList.add('task-description', 'w-full', 'mt-2');
+    description.classList.add('task-description', 'mt-2');
     description.textContent =
       toDoList[e.target.closest('.task-card').dataset.taskId].description;
     const taskEdit = document.createElement('button');
@@ -86,20 +86,6 @@ function editTaskCard(e) {
   editHeader.textContent = 'Editing';
   editHeader.classList.add('text-xl');
   editForm.appendChild(editHeader);
-  // 			<label for="project">
-  // 			<span class="block text-md font-medium">Task project</span>
-  // 			</label>
-  // 			<input class="project-edit h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-project" id="project" />
-
-  // 		<label for="date">
-  // 		<span class="block text-md font-medium">Task date</span>
-  // 		</label>
-  // 		<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="date" name="task-data" id="date" />
-
-  // 			<label for="description">
-  // 				<span class="block text-md font-medium">Task description</span>
-  // 			</label>
-  // 			<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="description"></textarea>
 
   const form = document.createElement('form');
   form.setAttribute('action', '#');
@@ -152,6 +138,51 @@ function editTaskCard(e) {
   projectInput.setAttribute('id', 'project');
   form.appendChild(projectInput);
 
+  const dateLabel = document.createElement('label');
+  dateLabel.classList.add('inline-block', 'w-full');
+  dateLabel.setAttribute('for', 'date');
+  dateLabel.textContent = 'Task date';
+  form.appendChild(dateLabel);
+  const dateInput = document.createElement('input');
+  dateInput.setAttribute(
+    'value',
+    `${toDoList[e.target.closest('.task-card').dataset.taskId].date}`
+  );
+  dateInput.classList.add(
+    'h-10',
+    'px-3',
+    'border',
+    'border-gray-200',
+    'rounded-lg',
+    'focus-visible:outline-blue-600'
+  );
+  dateInput.setAttribute('type', 'date');
+  dateInput.setAttribute('name', 'task-date');
+  dateInput.setAttribute('id', 'date');
+  form.appendChild(dateInput);
+
+  const descriptionLabel = document.createElement('label');
+  descriptionLabel.classList.add('inline-block', 'w-full');
+  descriptionLabel.setAttribute('for', 'description');
+  descriptionLabel.textContent = 'Task description';
+  form.appendChild(descriptionLabel);
+  const descriptionInput = document.createElement('textarea');
+  descriptionInput.textContent = `${
+    toDoList[e.target.closest('.task-card').dataset.taskId].description
+  }`;
+  descriptionInput.classList.add(
+    'w-full',
+    'h-100',
+    'px-3',
+    'border',
+    'border-gray-200',
+    'rounded-lg',
+    'focus-visible:outline-blue-600'
+  );
+  descriptionInput.setAttribute('name', 'task-description');
+  descriptionInput.setAttribute('id', 'description');
+  form.appendChild(descriptionInput);
+
   editForm.appendChild(form);
   const save = document.createElement('button');
   save.textContent = 'Save';
@@ -161,6 +192,10 @@ function editTaskCard(e) {
       nameInput.value;
     toDoList[e.target.closest('.task-card').dataset.taskId].project =
       projectInput.value;
+    toDoList[e.target.closest('.task-card').dataset.taskId].date =
+      dateInput.value;
+    toDoList[e.target.closest('.task-card').dataset.taskId].description =
+      descriptionInput.value;
     localStorage.setItem('tasks', JSON.stringify(toDoList));
     renderProjectsList();
     renderTaskList();
