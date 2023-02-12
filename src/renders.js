@@ -86,46 +86,62 @@ function editTaskCard(e) {
   editHeader.textContent = 'Editing';
   editHeader.classList.add('text-xl');
   editForm.appendChild(editHeader);
-  editForm.insertAdjacentHTML(
-    'beforeend',
-    `<div>
-	<form action="#" id="edit-task" method="post">
-		<div>
-			<label for="title">
-			<span class="block text-md font-medium">Task title</span>
-			</label>
-			<input class="name-edit h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-title" id="title" required />
-		</div>
+  // 		<div>
+  // 			<label for="project">
+  // 			<span class="block text-md font-medium">Task project</span>
+  // 			</label>
+  // 			<input class="project-edit h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-project" id="project" />
+  // 		</div>
 
-		<div>
-			<label for="project">
-			<span class="block text-md font-medium">Task project</span>
-			</label>
-			<input class="project-edit h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-project" id="project" />
-		</div>
+  // 		<div>
+  // 		<label for="date">
+  // 		<span class="block text-md font-medium">Task date</span>
+  // 		</label>
+  // 		<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="date" name="task-data" id="date" />
+  // 	</div>
 
-		<div>
-		<label for="date">
-		<span class="block text-md font-medium">Task date</span>
-		</label>
-		<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="date" name="task-data" id="date" />
-	</div>
-
-		<div>
-			<label for="description">
-				<span class="block text-md font-medium">Task description</span>
-			</label>
-			<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="description"></textarea>
-		</div>
-	</form>
-</div>`
+  // 		<div>
+  // 			<label for="description">
+  // 				<span class="block text-md font-medium">Task description</span>
+  // 			</label>
+  // 			<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="description"></textarea>
+  // 		</div>
+  const form = document.createElement('form');
+  form.setAttribute('action', '#');
+  form.setAttribute('id', 'edit-task');
+  form.setAttribute('method', 'post');
+  const nameLabel = document.createElement('label');
+  nameLabel.setAttribute('for', 'title');
+  nameLabel.textContent = 'Task title';
+  form.appendChild(nameLabel);
+  const nameInput = document.createElement('input');
+  nameInput.setAttribute(
+    'value',
+    `${toDoList[e.target.closest('.task-card').dataset.taskId].title}`
   );
-  const nameInput = document.querySelector('.name-edit');
+  nameInput.classList.add(
+    'h-10',
+    'px-3',
+    'border',
+    'border-gray-200',
+    'rounded-lg',
+    'focus-visible:outline-blue-600'
+  );
+  nameInput.setAttribute('type', 'text');
+  nameInput.setAttribute('name', 'task-title');
+  nameInput.setAttribute('id', 'title');
+  form.appendChild(nameInput);
+  editForm.appendChild(form);
   const save = document.createElement('button');
   save.textContent = 'Save';
   save.classList.add('bg-white', 'rounded-md', 'py-1', 'px-2');
-  save.setAttribute('type', 'submit');
-  save.setAttribute('form', 'edit-task');
+  save.addEventListener('click', (e) => {
+    toDoList[e.target.closest('.task-card').dataset.taskId].title =
+      nameInput.value;
+    localStorage.setItem('tasks', JSON.stringify(toDoList));
+    renderProjectsList();
+    renderTaskList();
+  });
   editForm.appendChild(save);
   e.target.closest('.expand').appendChild(editForm);
   e.target.closest('.edit-button').remove();
