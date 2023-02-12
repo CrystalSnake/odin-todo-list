@@ -78,7 +78,7 @@ function getForm() {
 		</div>
 
 		<div>
-		<label for="project">
+		<label for="date">
 		<span class="block text-md font-medium">Task date</span>
 		</label>
 		<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="date" name="task-data" id="date" />

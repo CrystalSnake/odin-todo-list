@@ -1,7 +1,8 @@
 import isThisWeek from 'date-fns/isThisWeek';
 import modalContainer from './modal';
 import toDoList from './storage';
-import { list, renderTaskList } from './renders';
+import { renderTaskList } from './renders';
+import { list } from './task';
 
 function getContainer() {
   const container = document.createElement('div');

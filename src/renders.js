@@ -2,6 +2,7 @@ import toDoList from './storage';
 import getProjectsList from './project';
 import getContainer from './UI';
 import { list } from './task';
+import { de } from 'date-fns/locale';
 
 function renderUI() {
   document.body.classList.add('font-display');
@@ -53,15 +54,81 @@ function renderTask(task, id) {
 }
 
 function expandTaskCard(e) {
-  if (document.querySelector('.task-description')) {
-    document.querySelector('.task-description').remove();
+  if (document.querySelector('.expand')) {
+    document.querySelector('.expand').remove();
   } else {
+    const expand = document.createElement('div');
+    expand.classList.add('expand');
     const description = document.createElement('div');
     description.classList.add('task-description', 'w-full', 'mt-2');
     description.textContent =
       toDoList[e.target.closest('.task-card').dataset.taskId].description;
-    e.target.closest('.task-card-text').appendChild(description);
+    const taskEdit = document.createElement('button');
+    taskEdit.textContent = 'Edit';
+    taskEdit.classList.add(
+      'edit-button',
+      'bg-white',
+      'rounded-md',
+      'py-1',
+      'px-2'
+    );
+    taskEdit.addEventListener('click', editTaskCard);
+    expand.appendChild(description);
+    expand.appendChild(taskEdit);
+    e.target.closest('.task-card-text').appendChild(expand);
   }
+}
+
+function editTaskCard(e) {
+  const editForm = document.createElement('div');
+  editForm.classList.add('w-full', 'mt-3');
+  const editHeader = document.createElement('h3');
+  editHeader.textContent = 'Editing';
+  editHeader.classList.add('text-xl');
+  editForm.appendChild(editHeader);
+  editForm.insertAdjacentHTML(
+    'beforeend',
+    `<div>
+	<form action="#" id="edit-task" method="post">
+		<div>
+			<label for="title">
+			<span class="block text-md font-medium">Task title</span>
+			</label>
+			<input class="name-edit h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-title" id="title" required />
+		</div>
+
+		<div>
+			<label for="project">
+			<span class="block text-md font-medium">Task project</span>
+			</label>
+			<input class="project-edit h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="text" name="task-project" id="project" />
+		</div>
+
+		<div>
+		<label for="date">
+		<span class="block text-md font-medium">Task date</span>
+		</label>
+		<input class="h-10 px-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" type="date" name="task-data" id="date" />
+	</div>
+
+		<div>
+			<label for="description">
+				<span class="block text-md font-medium">Task description</span>
+			</label>
+			<textarea class="h-100 w-full p-3 border border-gray-200 rounded-lg focus-visible:outline-blue-600" name="task-description" id="description"></textarea>
+		</div>
+	</form>
+</div>`
+  );
+  const nameInput = document.querySelector('.name-edit');
+  const save = document.createElement('button');
+  save.textContent = 'Save';
+  save.classList.add('bg-white', 'rounded-md', 'py-1', 'px-2');
+  save.setAttribute('type', 'submit');
+  save.setAttribute('form', 'edit-task');
+  editForm.appendChild(save);
+  e.target.closest('.expand').appendChild(editForm);
+  e.target.closest('.edit-button').remove();
 }
 
 function renderTaskList() {
@@ -107,4 +174,4 @@ function renderProjectsList() {
   return projectsContainer;
 }
 
-export { list, renderUI, renderProjectsList, renderTaskList };
+export { renderUI, renderProjectsList, renderTaskList };
